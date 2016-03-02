@@ -6,7 +6,7 @@ import localconfig
 if platform.system() == "Windows":
         sys.path.append(localconfig.winpath)
 else:sys.path.append(localconfig.linuxpath)
-import wikipedia
+import pywikibot
 import json
 def main():
     globe.getUserList()

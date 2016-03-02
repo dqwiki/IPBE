@@ -4,10 +4,10 @@ import localconfig
 if platform.system() == "Windows":
         sys.path.append(localconfig.winpath)
 else:sys.path.append(localconfig.linuxpath)
-import wikipedia
+import pywikibot
 import json
 def getUserList():
-        site = wikipedia.getSite()
+        site = pywikibot.getSite()
         predata = {'action': 'query',
             'list': 'allusers',
             'augroup': 'ipblock-exempt',
@@ -30,7 +30,7 @@ def getUserList():
 def query(user):
         letitle = "User:" + user
         #letitle = letitle.split("&quot;")[0]
-        site = wikipedia.getSite()
+        site = pywikibot.getSite()
         predata = {'action': 'query',
          'list': 'logevents',
          'letype': 'rights',
@@ -51,22 +51,22 @@ def sendPage(text, txtformat):
     #print text
     summary = localconfig.summary
     if txtformat == "list":
-        site = wikipedia.getSite()
+        site = pywikibot.getSite()
         pagename = localconfig.listlocation
-        page = wikipedia.Page(site, pagename)
+        page = pywikibot.Page(site, pagename)
         #print text
         pagetxt = page.get()
         page.put(text, comment=summary)
     elif txtformat == "raw":
-        site = wikipedia.getSite()
+        site = pywikibot.getSite()
         pagename = localconfig.rawlocation
-        page = wikipedia.Page(site, pagename)
+        page = pywikibot.Page(site, pagename)
         pagetxt = page.get()
         page.put(text, comment=summary)
 def startAllowed():
-        site = wikipedia.getSite()
+        site = pywikibot.getSite()
         pagename = localconfig.gopage
-        page = wikipedia.Page(site, pagename)
+        page = pywikibot.Page(site, pagename)
         start = page.get()
         if start == "Run":
                 return True
