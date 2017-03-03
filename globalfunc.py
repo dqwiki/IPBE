@@ -5,7 +5,13 @@ if platform.system() == "Windows":
         sys.path.append(localconfig.winpath)
 else:sys.path.append(localconfig.linuxpath)
 import pywikibot
-import json
+from pywikibot.data import api
+
+useWiki= pywikibot.Site('en','wikipedia')
+
+def callAPI(params):
+    req = api.Request(useWiki, **params)
+    return req.submit()
 def getUserList():
         site = pywikibot.getSite()
         params = {'action': 'query',
@@ -13,8 +19,7 @@ def getUserList():
             'augroup': 'ipblock-exempt',
             'aulimit':'5000',
             'format':'json'}
-        raw = callAPI(params)
-        result = json.loads(raw)
+        result = callAPI(params)
         reg = result["query"]["allusers"]
         userlist=""
         detaillist=""
@@ -39,8 +44,7 @@ def query(user):
 	 'lelimit':'100'
               }
         #print 'LETITLE: ' +letitle
-        raw = callAPI(params)
-        result = json.loads(raw)
+        result = callAPI(params)
         log = result["query"]["logevents"]
         #print log
         for event in log:
