@@ -27,9 +27,7 @@ def getUserList():
         for user in reg:
                 username = user["name"]
                 userlist = userlist+ "\n"+"*{{User|"+user["name"]+"}}"
-                try:detaillist = detaillist + "\n*" + query(username)
-                except:
-                        print "FAILED - " + username
+                detaillist = detaillist + "\n*" + query(username)
         sendPage(userlist, "raw")
         sendPage(detaillist, "list")
         return
