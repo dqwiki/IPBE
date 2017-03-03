@@ -60,7 +60,8 @@ def sendToTalk(timestamp,username,reason,admin):
 	now = datetime.datetime.now()
 	dateofchange = timestamp.split("Z")[0]
 	year = dateofchange.split("-")[0]
-	if username in pagetxt.split(year)[1]:return
+	try:if username in pagetxt.split("=="+year+"==")[1]:return
+	except:if username in pagetxt.split("== "+year+" ==")[1]:return
 	if year != str(now.year):return
 	month = dateofchange.split("-")[1].replace("0","")
 	monthword = now.strftime("%B")
