@@ -8,6 +8,7 @@ linuxpath = "/data/project/deltaquad-bots/pywikipedia/core"
 ##On Wiki locations
 rawlocation = "Wikipedia:IP block exemption/log/Raw"
 listlocation = "Wikipedia:IP block exemption/log"
+talklocation = "Wikipedia talk:IP block exemption/log"
 gopage = "User:DeltaQuad/IPBE/Run"
 
 #Edit Summary
