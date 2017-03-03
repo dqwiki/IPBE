@@ -60,7 +60,7 @@ def sendToTalk(timestamp,username,reason,admin):
 	dateofchange = timestamp.split("Z")[0]
 	year = dateofchange.split("-")[0]
 	if username in pagetxt.split(year)[1]:return
-	if year != now.year:return
+	if year != str(now.year):return
 	month = dateofchange.split("-")[1].replace("0","")
 	monthword = now.strftime("%B")
 	if not "=="+year+"==" in pagetxt and not "== "+year+" ==" in pagetxt:
@@ -69,10 +69,9 @@ def sendToTalk(timestamp,username,reason,admin):
 	except:pageyear = pagetxt.split("== "+year+" ==")[1]
 	if not monthword in pageyear:
 		pagetxt += "==="+monthword+"==="
-	if year == now.year:
-		if month == now.month:
-			pagetxt += "\n*{{UserIPBE|" + username+"}} - Granted by "+admin+" - "+reason+" ~~~~"
-		else:return
+	if month == str(now.month):
+		pagetxt += "\n*{{UserIPBE|" + username+"}} - Granted by "+admin+" - "+reason+" ~~~~"
+	else:return
 	summary = localconfig.summary
         page.put(pagetxt, comment=summary + " - Adding [[User:"+username+"|"+username+"]]")
 				
