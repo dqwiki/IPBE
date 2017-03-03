@@ -56,10 +56,10 @@ def sendToTalk(timestamp,username,reason,admin):
 	pagename = localconfig.talklocation
         page = pywikibot.Page(useWiki, pagename)
         pagetxt = page.get()
-	if username in pagetxt:return
 	now = datetime.datetime.now()
 	dateofchange = timestamp.split("Z")[0]
 	year = dateofchange.split("-")[0]
+	if username in pagetxt.split(year)[1]:return
 	if year != now.year:return
 	month = dateofchange.split("-")[1].replace("0","")
 	monthword = now.strftime("%B")
