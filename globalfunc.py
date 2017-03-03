@@ -58,7 +58,7 @@ def sendToTalk(timestamp,username,reason):
         pagetxt = page.get()
 	if username in pagetxt:return
 	now = datetime.datetime.now()
-	dateofchange = event["timestamp"].split("Z")[0]
+	dateofchange = timestamp.split("Z")[0]
 	year = dateofchange.split("-")[0]
 	if year < now.year:return
 	month = dateofchange.split("-")[1].replace("0","")
