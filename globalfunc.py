@@ -53,6 +53,7 @@ def query(user):
 			return event["timestamp"]+ " [[User:" + event["user"] + "|" + event["user"] + "]] ([[User talk:" + event["user"] + "|talk]] | [[Special:Contributions/" + event["user"] + "|contribs]] | [[Special:Block/" + event["user"] + "|block]])" + " changed rights for [[" +event["title"] + "]] from " + ','.join(event["params"]["oldgroups"]) + " to " + ','.join(event["params"]["newgroups"]) + " per '" + event["comment"] + "'"
                 #print "Event: "+event["timestamp"]+ " " + event["user"] + " changed userrights for " +event["title"] + " from " + event["rights"]["old"] + " to " + event["rights"]["new"] + " because " + event["comment"]
 def sendToTalk(timestamp,username,reason,admin):
+	username = username.split("User:")[1]
 	pagename = localconfig.talklocation
         page = pywikibot.Page(useWiki, pagename)
         pagetxt = page.get()
