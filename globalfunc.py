@@ -63,7 +63,7 @@ def sendToTalk(timestamp,username,reason,admin):
 	if year != now.year:return
 	month = dateofchange.split("-")[1].replace("0","")
 	monthword = now.strftime("%B")
-	if not "=="+year+"==" in pagetxt or not "== "+year+" ==" in pagetxt:
+	if not "=="+year+"==" in pagetxt and not "== "+year+" ==" in pagetxt:
 		pagetxt += "=="+year+"=="
 	try:pageyear = pagetxt.split("=="+year+"==")[1]
 	except:pageyear = pagetxt.split("== "+year+" ==")[1]
