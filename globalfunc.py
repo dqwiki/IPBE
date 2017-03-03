@@ -49,7 +49,7 @@ def query(user):
         for event in log:
                 if event["params"]["oldgroups"] == '': event["params"]["oldgroups"]="None"
                 if not "ipblock-exempt" in event["params"]["oldgroups"] and "ipblock-exempt" in event["params"]["newgroups"]:
-			sendToTalk(event["timestamp"],event["title"],event["comment"],event["admin"])
+			sendToTalk(event["timestamp"],event["title"],event["comment"],event["user"])
 			return event["timestamp"]+ " [[User:" + event["user"] + "|" + event["user"] + "]] ([[User talk:" + event["user"] + "|talk]] | [[Special:Contributions/" + event["user"] + "|contribs]] | [[Special:Block/" + event["user"] + "|block]])" + " changed rights for [[" +event["title"] + "]] from " + ','.join(event["params"]["oldgroups"]) + " to " + ','.join(event["params"]["newgroups"]) + " per '" + event["comment"] + "'"
                 #print "Event: "+event["timestamp"]+ " " + event["user"] + " changed userrights for " +event["title"] + " from " + event["rights"]["old"] + " to " + event["rights"]["new"] + " because " + event["comment"]
 def sendToTalk(timestamp,username,reason,admin):
