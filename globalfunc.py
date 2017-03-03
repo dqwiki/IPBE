@@ -54,7 +54,7 @@ def query(user):
                 #print "Event: "+event["timestamp"]+ " " + event["user"] + " changed userrights for " +event["title"] + " from " + event["rights"]["old"] + " to " + event["rights"]["new"] + " because " + event["comment"]
 def sendToTalk(timestamp,username,reason):
 	pagename = localconfig.talklocation
-        page = pywikibot.Page(site, pagename)
+        page = pywikibot.Page(useWiki, pagename)
         pagetxt = page.get()
 	if username in pagetxt:return
 	now = datetime.datetime.now()
@@ -81,20 +81,20 @@ def sendPage(text, txtformat):
     if txtformat == "list":
         site = pywikibot.getSite()
         pagename = localconfig.listlocation
-        page = pywikibot.Page(site, pagename)
+        page = pywikibot.Page(useWiki, pagename)
         #print text
         pagetxt = page.get()
         page.put(text, comment=summary)
     elif txtformat == "raw":
         site = pywikibot.getSite()
         pagename = localconfig.rawlocation
-        page = pywikibot.Page(site, pagename)
+        page = pywikibot.Page(useWiki, pagename)
         pagetxt = page.get()
         page.put(text, comment=summary)
 def startAllowed():
         site = pywikibot.getSite()
         pagename = localconfig.gopage
-        page = pywikibot.Page(site, pagename)
+        page = pywikibot.Page(useWiki, pagename)
         start = page.get()
         if start == "Run":
                 return True
