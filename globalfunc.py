@@ -8,12 +8,12 @@ import pywikibot
 import json
 def getUserList():
         site = pywikibot.getSite()
-        predata = {'action': 'query',
+        params = {'action': 'query',
             'list': 'allusers',
             'augroup': 'ipblock-exempt',
             'aulimit':'5000',
             'format':'json'}
-        response, raw = site.postForm(site.apipath(), predata)
+        raw = callAPI(params)
         result = json.loads(raw)
         reg = result["query"]["allusers"]
         userlist=""
@@ -22,8 +22,8 @@ def getUserList():
                 username = user["name"]
                 userlist = userlist+ "\n"+"*{{User|"+user["name"]+"}}"
                 try:detaillist = detaillist + "\n*" + query(username)
-		except:
-			print "FAILED - " + username
+                except:
+                        print "FAILED - " + username
         sendPage(userlist, "raw")
         sendPage(detaillist, "list")
         return
@@ -31,7 +31,7 @@ def query(user):
         letitle = "User:" + user
         #letitle = letitle.split("&quot;")[0]
         site = pywikibot.getSite()
-        predata = {'action': 'query',
+        params = {'action': 'query',
          'list': 'logevents',
          'letype': 'rights',
          'letitle':letitle,
@@ -39,7 +39,7 @@ def query(user):
 	 'lelimit':'100'
               }
         #print 'LETITLE: ' +letitle
-        response, raw = site.postForm(site.apipath(), predata)
+        raw = callAPI(params)
         result = json.loads(raw)
         log = result["query"]["logevents"]
         #print log
