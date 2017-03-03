@@ -49,10 +49,10 @@ def query(user):
         for event in log:
                 if event["params"]["oldgroups"] == '': event["params"]["oldgroups"]="None"
                 if not "ipblock-exempt" in event["params"]["oldgroups"] and "ipblock-exempt" in event["params"]["newgroups"]:
-			sendToTalk(event["timestamp"],event["user"],event["comment"])
+			sendToTalk(event["timestamp"],event["title"],event["comment"],event["admin"])
 			return event["timestamp"]+ " [[User:" + event["user"] + "|" + event["user"] + "]] ([[User talk:" + event["user"] + "|talk]] | [[Special:Contributions/" + event["user"] + "|contribs]] | [[Special:Block/" + event["user"] + "|block]])" + " changed rights for [[" +event["title"] + "]] from " + ','.join(event["params"]["oldgroups"]) + " to " + ','.join(event["params"]["newgroups"]) + " per '" + event["comment"] + "'"
                 #print "Event: "+event["timestamp"]+ " " + event["user"] + " changed userrights for " +event["title"] + " from " + event["rights"]["old"] + " to " + event["rights"]["new"] + " because " + event["comment"]
-def sendToTalk(timestamp,username,reason):
+def sendToTalk(timestamp,username,reason,admin):
 	pagename = localconfig.talklocation
         page = pywikibot.Page(useWiki, pagename)
         pagetxt = page.get()
@@ -60,7 +60,7 @@ def sendToTalk(timestamp,username,reason):
 	now = datetime.datetime.now()
 	dateofchange = timestamp.split("Z")[0]
 	year = dateofchange.split("-")[0]
-	if year < now.year:return
+	if year != now.year:return
 	month = dateofchange.split("-")[1].replace("0","")
 	monthword = now.strftime("%B")
 	if not "=="+year+"==" in pagetxt or not "== "+year+" ==" in pagetxt:
@@ -71,7 +71,8 @@ def sendToTalk(timestamp,username,reason):
 		pagetxt += "==="+monthword+"==="
 	if year == now.year:
 		if month == now.month:
-			pagetxt += "\n*{{UserIPBE|" + username+"}} - "+reason+" ~~~~"
+			pagetxt += "\n*{{UserIPBE|" + username+"}} - Granted by "+admin+" - "+reason+" ~~~~"
+		else:return
 	summary = localconfig.summary
         page.put(pagetxt, comment=summary + " - Adding [[User:"+username+"|"+username+"]]")
 				
