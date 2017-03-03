@@ -51,11 +51,11 @@ def query(user):
         for event in log:
                 if event["params"]["oldgroups"] == '': event["params"]["oldgroups"]="None"
                 if not "ipblock-exempt" in event["params"]["oldgroups"] and "ipblock-exempt" in event["params"]["newgroups"]:
-			addToTalk(event["timestamp"],event["user"],event["comment"])
+			sendToTalk(event["timestamp"],event["user"],event["comment"])
 			return event["timestamp"]+ " [[User:" + event["user"] + "|" + event["user"] + "]] ([[User talk:" + event["user"] + "|talk]] | [[Special:Contributions/" + event["user"] + "|contribs]] | [[Special:Block/" + event["user"] + "|block]])" + " changed rights for [[" +event["title"] + "]] from " + ','.join(event["params"]["oldgroups"]) + " to " + ','.join(event["params"]["newgroups"]) + " per '" + event["comment"] + "'"
                 #print "Event: "+event["timestamp"]+ " " + event["user"] + " changed userrights for " +event["title"] + " from " + event["rights"]["old"] + " to " + event["rights"]["new"] + " because " + event["comment"]
 def sendToTalk(timestamp,username,reason):
-	pagename = localconfig.listlocation
+	pagename = localconfig.talklocation
         page = pywikibot.Page(site, pagename)
         pagetxt = page.get()
 	if username in pagetxt:return
