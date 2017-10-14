@@ -47,7 +47,8 @@ def query(user):
         log = result["query"]["logevents"]
         #print log
         for event in log:
-                if event["params"]["oldmetadata"] == '': event["params"]["oldmetadata"]="None"
+                if event["params"]["oldmetadata"] == []: event["params"]["oldmetadata"]="None"
+                if event["params"]["newmetadata"] == []: event["params"]["newmetadata"]="None"
 		for line in event["params"]["oldmetadata"]:
 			if line["group"] =="ipblock-exempt":
 				old=True
