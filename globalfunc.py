@@ -65,7 +65,7 @@ def query(user):
 				newgroups = ""
 				count=0
 				for entry in line["oldmetadata"]:
-					if count = 0:
+					if count == 0:
 						oldgroups += entry["group"]
 						count+=1
 					else:
@@ -73,7 +73,7 @@ def query(user):
 						count+=1
 				count=0
 				for entry in line["newmetadata"]:
-					if count = 0:
+					if count == 0:
 						newgroups += entry["group"]
 						count+=1
 					else:
