@@ -50,9 +50,9 @@ def query(user):
                 if event["params"]["oldmetadata"] == '': event["params"]["oldmetadata"]="None"
 		for line in event["params"]["oldmetadata"]:
 			if line["group"] =="ipblock-exempt":
-				old=False
+				old=True
 				continue
-			else:old=True
+			else:old=False
 		for line in event["params"]["newmetadata"]:	
 			if line["group"] =="ipblock-exempt":
 				new=True
