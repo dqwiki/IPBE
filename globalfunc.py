@@ -50,14 +50,14 @@ def query(user):
                 if event["params"]["oldmetadata"] == '': event["params"]["oldmetadata"]="None"
 		for line in event["params"]["oldmetadata"]:
 			if line["group"] =="ipblock-exempt":
-				old=false
+				old=False
 				continue
-			else:old=true
+			else:old=True
 		for line in event["params"]["newmetadata"]:	
 			if line["group"] =="ipblock-exempt":
 				new=True
 				continue
-			else:new=false
+			else:new=False
 		if not old and new:
 			sendToTalk(event["timestamp"],event["title"],event["comment"],event["user"])
 			oldgroups = ""
