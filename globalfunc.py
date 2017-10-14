@@ -63,7 +63,7 @@ def query(user):
 			oldgroups = ""
 			newgroups = ""
 			count=0
-			for entry in line["oldmetadata"][0]:
+			for entry in event["params"]["oldmetadata"]:
 				if count == 0:
 					oldgroups += entry["group"]
 					count+=1
@@ -71,7 +71,7 @@ def query(user):
 					oldgroups += ", "+entry["group"]
 					count+=1
 			count=0
-			for entry in line["newmetadata"][0]:
+			for entry in event["params"]["newmetadata"]:
 				if count == 0:
 					newgroups += entry["group"]
 					count+=1
