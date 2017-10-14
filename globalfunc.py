@@ -48,39 +48,38 @@ def query(user):
         #print log
         for event in log:
                 if event["params"]["oldmetadata"] == '': event["params"]["oldmetadata"]="None"
-		for line in event["params"]:
+		for line in event["params"]["oldmetadata"]:
+			if entry["group"] =="ipblock-exempt":
+				old=false
+				continue
+			else:old=true
+		for line in event["params"]["newmetadata"]:	
+			if entry["group"] =="ipblock-exempt":
+				new=True
+				continue
+			else:new=false
+		if not old and new:
+			sendToTalk(event["timestamp"],event["title"],event["comment"],event["user"])
+			oldgroups = ""
+			newgroups = ""
+			count=0
 			for entry in line["oldmetadata"][0]:
-				if entry["group"] =="ipblock-exempt":
-					old=false
-					continue
-				else:old=true
+				if count == 0:
+					oldgroups += entry["group"]
+					count+=1
+				else:
+					oldgroups += ", "+entry["group"]
+					count+=1
+			count=0
 			for entry in line["newmetadata"][0]:
-				if entry["group"] =="ipblock-exempt":
-					new=True
-					continue
-				else:new=false
-			if not old and new:
-				sendToTalk(event["timestamp"],event["title"],event["comment"],event["user"])
-				oldgroups = ""
-				newgroups = ""
-				count=0
-				for entry in line["oldmetadata"][0]:
-					if count == 0:
-						oldgroups += entry["group"]
-						count+=1
-					else:
-						oldgroups += ", "+entry["group"]
-						count+=1
-				count=0
-				for entry in line["newmetadata"][0]:
-					if count == 0:
-						newgroups += entry["group"]
-						count+=1
-					else:
-						newgroups += ", "+entry["group"]
-						count+=1
-				return event["timestamp"]+ " [[User:" + event["user"] + "|" + event["user"] + "]] ([[User talk:" + event["user"] + "|talk]] | [[Special:Contributions/" + event["user"] + "|contribs]] | [[Special:Block/" + event["user"] + "|block]])" + " changed rights for [[" +event["title"] + "]] from " + oldgroups + " to " + newgroups + " per '" + event["comment"] + "'"
-			#print "Event: "+event["timestamp"]+ " " + event["user"] + " changed userrights for " +event["title"] + " from " + event["rights"]["old"] + " to " + event["rights"]["new"] + " because " + event["comment"]
+				if count == 0:
+					newgroups += entry["group"]
+					count+=1
+				else:
+					newgroups += ", "+entry["group"]
+					count+=1
+			return event["timestamp"]+ " [[User:" + event["user"] + "|" + event["user"] + "]] ([[User talk:" + event["user"] + "|talk]] | [[Special:Contributions/" + event["user"] + "|contribs]] | [[Special:Block/" + event["user"] + "|block]])" + " changed rights for [[" +event["title"] + "]] from " + oldgroups + " to " + newgroups + " per '" + event["comment"] + "'"
+		#print "Event: "+event["timestamp"]+ " " + event["user"] + " changed userrights for " +event["title"] + " from " + event["rights"]["old"] + " to " + event["rights"]["new"] + " because " + event["comment"]
 def sendToTalk(timestamp,username,reason,admin):
 	username = username.split("User:")[1]
 	pagename = localconfig.talklocation
