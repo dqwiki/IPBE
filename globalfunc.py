@@ -49,12 +49,12 @@ def query(user):
         for event in log:
                 if event["params"]["oldmetadata"] == '': event["params"]["oldmetadata"]="None"
 		for line in event["params"]:
-			for entry in line["oldmetadata"]:
+			for entry in line["oldmetadata"][0]:
 				if entry["group"] =="ipblock-exempt":
 					old=false
 					continue
 				else:old=true
-			for entry in line["newmetadata"]:
+			for entry in line["newmetadata"][0]:
 				if entry["group"] =="ipblock-exempt":
 					new=True
 					continue
@@ -64,7 +64,7 @@ def query(user):
 				oldgroups = ""
 				newgroups = ""
 				count=0
-				for entry in line["oldmetadata"]:
+				for entry in line["oldmetadata"][0]:
 					if count == 0:
 						oldgroups += entry["group"]
 						count+=1
@@ -72,7 +72,7 @@ def query(user):
 						oldgroups += ", "+entry["group"]
 						count+=1
 				count=0
-				for entry in line["newmetadata"]:
+				for entry in line["newmetadata"][0]:
 					if count == 0:
 						newgroups += entry["group"]
 						count+=1
