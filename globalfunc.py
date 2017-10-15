@@ -76,21 +76,27 @@ def query(user):
 			oldgroups = ""
 			newgroups = ""
 			count=0
-			for entry in event["params"]["oldmetadata"]:
-				if count == 0:
-					oldgroups += entry["group"]
-					count+=1
-				else:
-					oldgroups += ", "+entry["group"]
-					count+=1
+			if skipold:
+                                oldgroups = "None"
+                        else:
+                                for entry in event["params"]["oldmetadata"]:
+                                        if count == 0:
+                                                oldgroups += entry["group"]
+                                                count+=1
+                                        else:
+                                                oldgroups += ", "+entry["group"]
+                                                count+=1
 			count=0
-			for entry in event["params"]["newmetadata"]:
-				if count == 0:
-					newgroups += entry["group"]
-					count+=1
-				else:
-					newgroups += ", "+entry["group"]
-					count+=1
+			if skipnew:
+                                newgroups = "None"
+                        else:
+                                for entry in event["params"]["newmetadata"]:
+                                        if count == 0:
+                                                newgroups += entry["group"]
+                                                count+=1
+                                        else:
+                                                newgroups += ", "+entry["group"]
+                                                +=1
 			return event["timestamp"]+ " [[User:" + event["user"] + "|" + event["user"] + "]] ([[User talk:" + event["user"] + "|talk]] | [[Special:Contributions/" + event["user"] + "|contribs]] | [[Special:Block/" + event["user"] + "|block]])" + " changed rights for [[" +event["title"] + "]] from " + oldgroups + " to " + newgroups + " per '" + event["comment"] + "'"
 		#print "Event: "+event["timestamp"]+ " " + event["user"] + " changed userrights for " +event["title"] + " from " + event["rights"]["old"] + " to " + event["rights"]["new"] + " because " + event["comment"]
 def sendToTalk(timestamp,username,reason,admin):
